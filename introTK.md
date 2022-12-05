@@ -234,7 +234,7 @@ variable en dehors de la fonction, il faut préciser à python de la
 chercher à l'extérieur de la fonction. Le mot clé `global`est prévu
 pour cela.
 
-### Un peu de texte 
+### Un Entry
 
 Lorsque l'on veut demander à l'utilisateur de donner un nombre, une
 chaîne de caractère (tel qu'un nom, un prénom, etc...). Nous avons deux
@@ -302,6 +302,32 @@ window.mainloop()
 
 
 ![](images/tk-win-hello-name.png){:.width-50}
+
+
+Il est possible de masquer le texte qui s'affiche dans un
+`Entry`. Pour cela, il suffit d'utiliser l'option `show="*"`.
+
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title('Login')
+root.geometry("350x220")
+
+password_label = Label(text='Password:')
+password_label.pack()
+password = Entry(show="*")
+password.pack(anchor="w", padx=10, pady=5, fill=X)
+    
+
+
+root.mainloop()
+```
+
+![](images/tk-win-entry-password.png){:.width-50}
+
 
 
 
@@ -800,4 +826,166 @@ root.mainloop()
 
 ![](images/tk-win-side-mixte.png){:.width-50}
 
+
+#### Un exemple concret : login
+
+Pour finir ce chapitre, regardons la création d'une fenêtre de login.
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title('Login')
+root.geometry("350x220")
+
+
+username_label  = Label(text='Username:')
+username_label.pack(anchor="w",padx=10, pady=5)
+username = Entry()
+username.pack(anchor="w", padx=10, pady=5, fill=X)
+
+password_label = Label(text='Password:')
+password_label.pack(anchor="w", padx=10, pady=5)
+password = Entry(show="*")
+password.pack(anchor="w", padx=10, pady=5, fill=X)
+    
+login_button = Button(text='Login').pack(anchor="w", padx=10, pady=5)
+
+root.mainloop()
+```
+
+![](images/tk-win-side-password.png){:.width-50}
+
+
+# Les objets avancés
+
+
+
+## Un checkbox
+
+Il est possible de créer un liste options à sélectionner (ou checked
+box).
+
+```python
+checkbox = Checkbutton(container,
+                text='<checkbox label>',
+                command=check_changed,
+                variable=checkbox_var,
+                onvalue='<value_when_checked>',
+                offvalue='<value_when_unchecked>')
+``
+
+Voici un exemple simple d'emploi :
+
+```python
+from tkinter import *
+
+def check_changed():
+    lbl_to_change.config(text=f"{checkbox_var.get()}")
+    
+
+root = Tk()
+root.title('Login')
+root.geometry("350x220")
+checkbox_var = StringVar()
+lbl_to_change = Label(root)
+lbl_to_change.pack()
+    
+checkbox = Checkbutton(root,
+                text='check_lbl',
+                command=check_changed,
+                variable=checkbox_var,
+                onvalue='selected',
+                offvalue='unselected')
+checkbox.pack()
+root.mainloop()
+```
+
+![](images/tk-win-checkbt.png){:.width-50}
+
+
+
+
+
+## Radio Button
+
+Il est aussi possible d'utiliser de bouton radio en tkinter. Voici la
+syntaxe :
+
+
+```python
+selected = StringVar()
+r1 = Radiobutton(root, text='Option 1', value='Value 1', variable=selected)
+r2 = Radiobutton(root, text='Option 2', value='Value 2', variable=selected)
+r3 = Radiobutton(root, text='Option 3', value='value 3', variable=selected)
+```
+
+Voici un exemple complet :
+
+
+```python
+from tkinter import *
+from tkinter.messagebox import showinfo
+
+#root window
+root = Tk()
+root.geometry('400x300')
+root.resizable(False, False)
+root.title('Radio Button Demo')
+
+
+def show_selected_size():
+    showinfo(
+        title='Result',
+        message=selected_size.get()
+    )
+    
+    
+selected_size = StringVar()
+sizes = (('Small', 'S'),
+         ('Medium', 'M'),
+         ('Large', 'L'),
+         ('Extra Large', 'XL'),
+         ('Extra Extra Large', 'XXL'))
+
+#label
+label = Label(text="What's your t-shirt size?")
+label.pack(fill='x', padx=5, pady=5)
+
+#radio buttons
+for size in sizes:
+    r = Radiobutton(
+        root,
+        text=size[0],
+        value=size[1],
+        variable=selected_size
+    )
+    r.pack(fill='x', padx=5, pady=5)
+    
+#button
+button = Button(
+    root,
+    text="Get Selected Size",
+    command=show_selected_size)
+
+button.pack(fill='x', padx=5, pady=5)
+
+
+root.mainloop()
+```
+
+![](images/tk-win-radio.png){:.width-75}
+
+
+# Aller plus loin
+
+Dans ce livre, nous avons abordé une petite partie de tkinter. Il y a
+pleins d'objet et de technique de programmation que nous n'avons pas
+aborder. Ce livre est en partie basé sur le site : [python
+tutorial](https://www.pythontutorial.net/tkinter/). 
+
+Attention, cependant les exemples présent sur le site utilise un
+sur-couche de tkinter appelée themed tk (ttk).  Il faut
+adapter le code afin qu'il soit compatible avec la version simple de tkinter.
 
