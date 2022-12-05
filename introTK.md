@@ -311,7 +311,7 @@ Afin de faire une interface avancée, il faut que nous parlions de la
 méthode `pack()`de manière un peu plus exhaustive. Nous allons voir
 plusieurs exemples afin d'illustré le fonctionnement de `pack()`.
 
-###  un paquetage pas défaut
+### un paquetage par défaut
 
 Voici donc le premier exemple.
 
@@ -353,12 +353,14 @@ système de coordonnées basé sur le coin gauche haut.
 ![](images/tk-win-coo.png){:.width-50}
 
 
-### Espacement (padx, pady)
+### Espacement (padx, pady, ipadx et ipady)
 
 Il est possible d'ajouter un espacement (avant, après, en haut et en
 bas), d'un objet par rapport à un autre. Il s'agit des attributs
-`ipadx` et `ipady`.
-
+`padx` et `pady`. Il est aussi possible d'ajouter de l'espace au sein
+même de l'objet. Il s'agit de `ipadx`et `ipady`.
+	
+Voyons déjà l'effet des `ipad` :
 
 
 ```python
@@ -374,14 +376,44 @@ lbl_demo1.pack(ipadx=10, ipady=10)
 
 
 lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
-lbl_demo2.pack(ipadx=15, ipady=20)
+lbl_demo2.pack()
 
 
 root.mainloop()
 ```
 
 
+![](images/tk-win-ipad.png){:.width-50}
+
+Nous constatons que le premier label a été élargi dans les deux axes.
+
+Regardons maintenant l'effet des `pad` :
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("200x200")
+
+
+lbl_demo1 = Label(root, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack(padx=10, pady=10)
+
+
+lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack()
+
+
+root.mainloop()
+```
+
+
+
 ![](images/tk-win-pad.png){:.width-50}
+
+Nous constatons ici que qu'un espace entre les labels a été ajouté.
 
 
 ### On s'étend (the `fill`option)
@@ -412,6 +444,7 @@ root.mainloop()
 
 
 ![](images/tk-win-fill1.png){:.width-50}
+
 
 
 Nous constatons que le `fill`en X fonctionne mais, il ne se passe rien
@@ -506,7 +539,7 @@ root.mainloop()
 
 
 La propriété `anchor` permet d'ancrer un objet dans le coin de
-l'espace définit. Il accepte les valeurs suivantes :
+**l'espace définit**. Il accepte les valeurs suivantes :
 
 
 | Sticky | Description                 |
@@ -524,5 +557,247 @@ l'espace définit. Il accepte les valeurs suivantes :
 
 
 ![](images/tk-win-path.png){:.width-50}
+
+
+Remarque : Attention, l'accroche ne se fait que dans le cadre de
+l'objet. Il n'est pas possible d'en sortir.
+
+
+Prenons l'exemple suivant :
+
+
+```python
+
+#!/usr/bin/env python3
+from tkinter import *
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("200x200")
+
+
+
+lbl_demo1 = Label(root, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack(expand=True, anchor="se")
+
+lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack(expand=True)
+
+root.mainloop()
+```
+
+![](images/tk-win-anchor-limit1.png){:.width-50}
+
+Nous constatons que le label rouge ne s'ancre pas complètement au
+sud. Afin de mieux comprendre ce qui se passe, il faut ajouter un
+Frame de type Label tel que : 
+
+
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("200x200")
+
+lblf_1 = LabelFrame(root, text="demo 1")
+lblf_1.pack(expand=True,fill=BOTH)
+
+
+lblf_2 = LabelFrame(root, text="demo 2")
+lblf_2.pack(expand=True, fill=BOTH)
+
+
+lbl_demo1 = Label(lblf_1, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack()
+
+
+lbl_demo2 = Label(lblf_2, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack()
+
+
+root.mainloop()
+```
+
+![](images/tk-win-anchor-demo.png){:.width-50}
+
+
+Il sera impossible d'ancrer le label "demo 1" tout en bas de la
+fenêtre. En effet, l'espace allouer au label rouge est délimiter par la
+moitié de l'écran. Comme nous pouvons le constater grâce au `Frame`.
+
+Regardons donc, ce que fait un `anchor='SE`sur le `label 1`.
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("200x200")
+
+lblf_1 = LabelFrame(root, text="demo 1")
+lblf_1.pack(expand=True,fill=BOTH)
+
+
+lblf_2 = LabelFrame(root, text="demo 2")
+lblf_2.pack(expand=True, fill=BOTH)
+
+
+lbl_demo1 = Label(lblf_1, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack()
+
+
+lbl_demo2 = Label(lblf_2, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack()
+
+
+root.mainloop()
+```
+
+![](images/tk-win-anchor-limit2.png){:.width-50}
+
+
+### Changer d'orientation `side`.
+
+Comme nous l'avions vu au [début de
+chapitre](#un-paquetage-par-défaut), `pack` emplie les objets l'un en
+dessous de l'autre.
+
+![](images/tk-win-pack-1.png){:.width-50}
+
+Nous pouvons changer ce comportement avec le paramètre `side`. Voici
+les options possible du paramètre `side`.
+
+
+| Sticky | Description                                                |
+|--------|------------------------------------------------------------|
+| TOP    | Emplie les objets de haut en bas (comportement par défaut= |
+| LEFT   | Emplie les objets de gauche à droite                       |
+| RIGHT  | Emplie les objets de droite à gauche                       |
+| BOTTOM | Emplie les objet de bas en haut.                           |
+
+
+Reprenons l'exemple du début de chapitre en changeant seulement
+l'orientation.
+
+#### `side`LEFT
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("400x200")
+
+
+lbl_demo1 = Label(root, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack(side=LEFT)
+
+
+lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack(side=LEFT)
+
+bt_demo = Button(root, text="click me")
+bt_demo.pack(side=LEFT)
+
+txt_demo = Entry(root)
+txt_demo.pack(side=LEFT)
+
+root.mainloop()
+```
+
+![](images/tk-win-side-left.png){:.width-50}
+
+
+
+#### `side`RIGHT
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("400x200")
+
+
+lbl_demo1 = Label(root, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack(side=RIGHT)
+
+
+lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack(side=RIGHT)
+
+bt_demo = Button(root, text="click me")
+bt_demo.pack(side=RIGHT)
+
+txt_demo = Entry(root)
+txt_demo.pack(side=RIGHT)
+
+root.mainloop()
+```
+
+![](images/tk-win-side-right.png){:.width-50}
+
+#### `side`BOTTOM
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("200x200")
+
+
+lbl_demo1 = Label(root, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack()
+
+
+lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack()
+
+bt_demo = Button(root, text="click me")
+bt_demo.pack()
+
+txt_demo = Entry(root)
+txt_demo.pack() 
+
+root.mainloop()
+```
+
+![](images/tk-win-side-bottom.png){:.width-50}
+
+
+#### `side` mixte
+
+Il est aussi possible de mélanger les options d'orientation. Nous
+pouvons donc faire ceci :
+
+
+```python
+from tkinter import *
+
+root = Tk()
+root.title("IntroTK - pack")
+root.geometry("200x200")
+
+
+lbl_demo1 = Label(root, text="demo 1", bg="red", fg="white")
+lbl_demo1.pack(side=LEFT,expand=True, fill=BOTH)  
+
+
+lbl_demo2 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo2.pack( side=TOP, expand=True, fill=BOTH)
+
+lbl_demo3 = Label(root, text="demo 2", bg="blue", fg="white")
+lbl_demo3.pack(side=TOP, expand=True, fill=BOTH)
+
+
+root.mainloop()
+```
+
+![](images/tk-win-side-mixte.png){:.width-50}
 
 
