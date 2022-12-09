@@ -36,7 +36,7 @@ l'utilisation de tkinter au sein du CPNV.
 
 Ce livre n'est en aucun cas une référence pour python. Le langage est
 bien plus complexe et avancé que ce que le livre présente. 
-Il permettra cependant, d'avoir une bonne connaissance de la syntaxe, et de fonction de base du langage.
+Il permettra cependant, d'avoir une bonne connaissance de la syntaxe, et des fonctions de base du langage.
 
 # Les bases
 
@@ -56,7 +56,7 @@ Puis, il faut créer la fenêtre principale.
 window = Tk()
 ```
 
-A ce stade, si vous exécuter le programme rien ne se passe ou
+A ce stade, si vous exécutez le programme rien ne se passe ou
 presque. Une fenêtre s'ouvre et se ferme directement. Pour combler ce
 problème, il faut dire à tkinter d'attendre un évènement système et ne
 pas fermer le fenêtre. Pour cela, on démarre la boucle principale.
@@ -88,7 +88,7 @@ après la déclaration de la fenêtre.
 window.title("introTK")
 ```
 
-Pour change la couleur de fond, nous devons utiliser la méthode `configure`.
+Pour changer la couleur de fond, nous devons utiliser la méthode `configure`.
 
 ```python
 window.configure(bg='blue')
@@ -151,7 +151,7 @@ Ce qui donne :
 
  ![](images/tk-win-label.png){:.width-50}
 
-Pour changer, le texte d'un label après sa déclaration, nous pouvons
+Pour changer le texte d'un label après sa déclaration, nous pouvons
 utiliser la méthode `config()` avec comme argument le terme `text=`.
 
 ```python
@@ -182,7 +182,7 @@ mon_bouton.pack()
 ### mise en commun
 
 Afin de voir un expemple complet, nous allons créer un label, et un
-bouton sur un fenêtre tk. Lorsque l'utilisateur appuie sur le bouton ,
+bouton sur un fenêtre tk. Lorsque l'utilisateur appuie sur le bouton,
 le texte du label change.
 
 ```python
@@ -210,23 +210,23 @@ Ce qui donne :
 ![](images/tk-win-label-bt.png){:.width-33}
 ![](images/tk-win-label-bt-push.png){:.width-33}
 
-Remarque : Nous utilisons dans le code ci-dessous la commande
-`global` devant le nom d'une variable. Normalement, dans un fonction
+Remarque : Nous utilisons dans le code ci-dessus la commande
+`global` devant le nom d'une variable. Normalement, dans une fonction
 il est permis d'utiliser uniquement les variables passées en paramètre
-ou créée au sein même de la fonction. Si l'on veut utiliser une
+ou créées au sein même de la fonction. Si l'on veut utiliser une
 variable en dehors de la fonction, il faut préciser à python de la
-chercher à l'extérieur de la fonction. Le mot clé `global`est prévu
+chercher à l'extérieur de la fonction. Le mot clé `global` est prévu
 pour cela.
 
 ### Un Entry
 
 Lorsque l'on veut demander à l'utilisateur de donner un nombre, une
-chaîne de caractère (tel qu'un nom, un prénom, etc...). Nous avons deux
-possibilités. La première est d'utiliser un champ qui compotre une
-seule et unique ligne la classe `Entry`. Si nous devons demander plus
-d'une ligne, la classe `Text`est là pour cela. Dans le cadre de ce
-document, nous ne verrons que la partie `Entry`. Généralement, le
-champ `Entry`est précéder d'un label afin d'identifier ce que
+chaîne de caractère (tel qu'un nom, un prénom, etc...), nous avons deux
+possibilités. La première est d'utiliser un champ qui comporte une
+seule et unique ligne alors il faut la classe `Entry`. Si nous devons demander plus
+d'une ligne, la classe `Text` est là pour cela. Dans le cadre de ce
+document, nous ne verrons que la partie `Entry`. Généralement le
+champ `Entry` est précédé d'un label afin d'identifier ce que
 l'utilisateur doit entrer.
 
 ```python
@@ -303,8 +303,8 @@ root.mainloop()
 ## Mise en `pack()`
 
 Afin de faire une interface avancée, il faut que nous parlions de la
-méthode `pack()`de manière un peu plus exhaustive. Nous allons voir
-plusieurs exemples afin d'illustré le fonctionnement de `pack()`.
+méthode `pack()` de manière un peu plus exhaustive. Nous allons voir
+plusieurs exemples afin d'illustrer le fonctionnement de `pack()`.
 
 ### un paquetage par défaut
 
@@ -336,10 +336,10 @@ root.mainloop()
 
 ![](images/tk-win-pack-1.png){:.width-50}
 
-Nous constatons que la méthode `pack()` emplie horizontalement les objets (Label,
+Nous constatons que la méthode `pack()` empile horizontalement les objets (Label,
 Botton et Entry) et centre ceux-ci.
 
-Avant d'aller plus loin, il faut comprendre que tkinter utilise en
+Avant d'aller plus loin, il faut comprendre que tkinter utilise un
 système de coordonnées basé sur le coin gauche haut.
 
 ![](images/tk-win-coo.png){:.width-50}
@@ -347,7 +347,7 @@ système de coordonnées basé sur le coin gauche haut.
 ### Espacement (padx, pady, ipadx et ipady)
 
 Il est possible d'ajouter un espacement (avant, après, en haut et en
-bas), d'un objet par rapport à un autre. Il s'agit des attributs
+bas) d'un objet par rapport à un autre. Il s'agit des attributs
 `padx` et `pady`. Il est aussi possible d'ajouter de l'espace au sein
 même de l'objet. Il s'agit de `ipadx`et `ipady`.
 
@@ -397,7 +397,7 @@ Nous constatons ici que qu'un espace entre les labels a été ajouté.
 
 ### On s'étend (the `fill`option)
 
-Il est possible d'étendre à un objet dans les deux axes. Reprenons
+Il est possible d'étendre un objet dans les deux axes. Reprenons
 l'exemple précédent.
 
 ```python
@@ -418,19 +418,19 @@ root.mainloop()
 
 ![](images/tk-win-fill1.png){:.width-50}
 
-Nous constatons que le `fill`en X fonctionne mais, il ne se passe rien
-avec le `fill` en y. Ceci est du à l'aire que consacre tkinter à
+Nous constatons que le `fill` en X fonctionne mais il ne se passe rien
+avec le `fill` en Y. Ceci est du à l'aire que consacre tkinter à
 l'objet (voir image ci-dessous).
 
 ![](images/tk-win-fill-box.png){:.width-50}
 
-Comme vous le constatez, l'espace allouer pour les box ne permet pas
+Comme vous le constatez, l'espace alloué pour les box ne permet pas
 d'étendre sur l'axe des y. 
 
 ### On s'étend encore un peu plus ...
 
-Pour palier au problème rencontrer au chapitre précédent, nous allons
-utiliser le paramètre `expand`. 
+Pour palier au problème rencontré au chapitre précédent, nous allons
+utiliser le paramètre `expand`.
 
 ```python
 from tkinter import *
@@ -450,7 +450,7 @@ root.mainloop()
 
 ![](images/tk-win-fill-expend.png){:.width-50}
 
-Ce qui nous permet de faire un `fill`sur les deux axes comme tel :
+Ce qui nous permet de faire un `fill` sur les deux axes comme tel :
 
 ```python
 from tkinter import *
@@ -470,7 +470,7 @@ root.mainloop()
 
 ![](images//tk-win-fill-full.png){:.width-50}
 
-Si nous utilisons aussi l'`expend` sur le second label. Il y a
+Si nous utilisons aussi l'`expand` sur le second label, il y a
 répartition entre les deux label.
 
 ```python
@@ -562,10 +562,10 @@ root.mainloop()
 ![](images/tk-win-anchor-demo.png){:.width-50}
 
 Il sera impossible d'ancrer le label "demo 1" tout en bas de la
-fenêtre. En effet, l'espace allouer au label rouge est délimiter par la
+fenêtre. En effet, l'espace alloué au label rouge est délimité par la
 moitié de l'écran. Comme nous pouvons le constater grâce au `Frame`.
 
-Regardons donc, ce que fait un `anchor='SE`sur le `label 1`.
+Regardons donc, ce que fait un `anchor='SE` sur le `label 1`.
 
 ```python
 from tkinter import *
@@ -594,7 +594,7 @@ root.mainloop()
 ### Changer d'orientation `side`.
 
 Comme nous l'avions vu au [début de
-chapitre](#un-paquetage-par-défaut), `pack` emplie les objets l'un en
+chapitre](#un-paquetage-par-défaut), `pack` empile les objets l'un en
 dessous de l'autre.
 
 ![](images/tk-win-pack-1.png){:.width-50}
@@ -747,7 +747,7 @@ root.mainloop()
 
 ## Un checkbox
 
-Il est possible de créer un liste options à sélectionner (ou checked box).
+Il est possible de créer un liste d'options à sélectionner (ou checkbox).
 
 ```python
 checkbox = Checkbutton(container,
@@ -787,7 +787,7 @@ root.mainloop()
 
 ## Radio Button
 
-Il est aussi possible d'utiliser de bouton radio en tkinter. Voici la syntaxe :
+Il est aussi possible d'utiliser des bouton radio en tkinter. Voici la syntaxe :
 
 ```python
 selected = StringVar()
@@ -851,11 +851,11 @@ root.mainloop()
 # Aller plus loin
 
 Dans ce livre, nous avons abordé une petite partie de tkinter. Il y a
-pleins d'objet et de technique de programmation que nous n'avons pas
-aborder. Ce livre est en partie basé sur le site : [python
+pleins d'objets et de techniques de programmation que nous n'avons pas
+abordé. Ce livre est en partie basé sur le site : [python
 tutorial](https://www.pythontutorial.net/tkinter/). 
 
-Attention, cependant les exemples présent sur le site utilise un
+Attention, cependant les exemples présent sur le site utilisent une
 sur-couche de tkinter appelée themed tk (ttk).  Il faut
 adapter le code afin qu'il soit compatible avec la version simple de tkinter.
 
