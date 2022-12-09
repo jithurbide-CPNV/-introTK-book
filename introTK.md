@@ -15,7 +15,7 @@ hide_footer_on_page: "page==1"
 # Cookbook tkinter
 {:.no_toc.title}
 
-
+ 
 {:.lines-14}
 
 
