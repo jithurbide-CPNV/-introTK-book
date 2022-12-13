@@ -848,6 +848,75 @@ root.mainloop()
 
 ![](images/tk-win-radio.png){:.width-75}
 
+
+## ListBox
+
+
+Voici un exemple d'emploi d'une listbox :
+
+```python
+list_items = tk.Variable(value=items)
+listbox = tk.Listbox(
+    container,
+    height,
+    listvariable=list_items
+)
+```
+
+Il est possible de définir le mode de sélection. Voici les options
+possibles :
+
+
+
+| selectmode | Description                                                                                                                                          |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| BROWSE     | Permet une sélection unique. Si une option est sélectionnée, et que l'on la déplace, la sélection suit. C'est option par défaut.                     |
+| EXTENDED   | Séection multiple. Permier click permet de sélectioner le permier ojet, le second clic permet de sélectionner tous les options entre les deux clics. |
+| SINGLE     | Sélection simple.                                                                                                                                    |
+| MULTIPLE   | Sélection muliple. Chaque clique permet de séectionner une option. Si l'option est déjà sélectionnée, elle sera desélectionnée.                      |
+|            |                                                                                                                                                      |
+
+
+Un exemple complet :
+
+```python
+from tkinter import *
+from tkinter import messagebox
+
+def items_selected(event):
+    # get all selected indices
+    selected_indices =  listbox.curselection()
+    # get selected items
+    selected_langs = ",".join([listbox.get(i) for i in selected_indices])
+    msg = f'You selected: {selected_langs}'
+    messagebox.showinfo(title='Information', message=msg)
+
+# create the root window
+root = Tk()
+root.title('Listbox')
+root.geometry("300x300")
+
+
+# create a list box
+langs = ('Java', 'C#', 'C', 'C++', 'Python',
+         'Go', 'JavaScript', 'PHP', 'Swift')
+
+list_lang = Variable(value=langs)
+
+listbox = Listbox(
+    root,
+    listvariable=list_lang,
+    height=6,
+    selectmode=MULTIPLE
+)
+
+listbox.pack(expand=True, fill=BOTH)
+        
+listbox.bind('<<ListboxSelect>>', items_selected)
+
+root.mainloop()
+```
+
 # Aller plus loin
 
 Dans ce livre, nous avons abordé une petite partie de tkinter. Il y a
