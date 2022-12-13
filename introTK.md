@@ -181,7 +181,7 @@ mon_bouton.pack()
 
 ### mise en commun
 
-Afin de voir un expemple complet, nous allons créer un label, et un
+Afin de voir un exemple complet, nous allons créer un label, et un
 bouton sur un fenêtre tk. Lorsque l'utilisateur appuie sur le bouton,
 le texte du label change.
 
